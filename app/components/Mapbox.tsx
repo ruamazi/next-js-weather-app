@@ -1,14 +1,24 @@
 "use client";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  useMap,
+  MapContainerProps,
+} from "react-leaflet";
 import { useGlobalContext } from "../context/globalContext";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 
+interface AdditionalProps {
+  center?: number[] | undefined;
+  zoom?: number | undefined;
+  scrollWheelZoom?: boolean;
+}
 interface activeCityCordsType {
   lon: number;
   lat: number;
 }
-
+type ExtendedMapContainerProps = MapContainerProps & AdditionalProps;
 function FlyToActiveCity({
   activeCityCords,
 }: {
@@ -33,6 +43,9 @@ function FlyToActiveCity({
 
   return null;
 }
+const MyMapComponent: React.FC<ExtendedMapContainerProps> = (props) => {
+  return <MapContainer {...props} />;
+};
 
 const Mapbox = () => {
   const { forecast } = useGlobalContext();
@@ -49,7 +62,7 @@ const Mapbox = () => {
 
   return (
     <div className="flex-1 basis-[50%] border rounded-lg">
-      <MapContainer
+      <MyMapComponent
         center={[activeCityCords?.lat, activeCityCords?.lon]}
         zoom={13}
         scrollWheelZoom={false}
@@ -59,7 +72,7 @@ const Mapbox = () => {
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         <FlyToActiveCity activeCityCords={activeCityCords} />
-      </MapContainer>
+      </MyMapComponent>
     </div>
   );
 };
