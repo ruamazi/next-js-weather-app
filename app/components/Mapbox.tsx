@@ -4,7 +4,16 @@ import { useGlobalContext } from "../context/globalContext";
 import { useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 
-function FlyToActiveCity({ activeCityCords }) {
+interface activeCityCordsType {
+  lon: number;
+  lat: number;
+}
+
+function FlyToActiveCity({
+  activeCityCords,
+}: {
+  activeCityCords: activeCityCordsType;
+}) {
   const map = useMap();
 
   useEffect(() => {
@@ -28,7 +37,7 @@ function FlyToActiveCity({ activeCityCords }) {
 const Mapbox = () => {
   const { forecast } = useGlobalContext();
 
-  const activeCityCords = forecast?.coord;
+  const activeCityCords: activeCityCordsType = forecast?.coord;
 
   if (!forecast || !forecast.coord || !activeCityCords) {
     return (
