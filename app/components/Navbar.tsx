@@ -12,7 +12,10 @@ const Navbar = () => {
         <SearchDialog />
         <div className="btn-group flex items-center gap-2">
           <ThemeDropdown />
-          <Link href={"https://github.com"} target="_blanc">
+          <Link
+            href={"https://github.com/ruamazi/next-js-weather-app"}
+            target="_blanc"
+          >
             <Button className="source-code-btn flex items-center gap-2">
               {githubIcon} Source Code
             </Button>
